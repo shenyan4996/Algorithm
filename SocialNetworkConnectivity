@@ -1,1 +1,58 @@
+public class SocialNetworkConnectivity{
+  private int[] parent; ## store the root of each object
+  private int[] size; ## store the size of each component
+  private int count;  ## number of components
+###constructor initializing private data
+  public SocialNetworkConnectivity(int N){
+    parent=new int[N];
+    size=new int[N];
+    for (int i=0;i<N; i++){
+      id[i]=i;
+      size[i]=1;
+    }
+    count=N;
+  }
+### root method is to find the root of object
+  private int root(int i){
+    while (i!=parent[i]) i=parent[i];
+    return i;
+  }
+### union method is to union two objects using weighted union where the root of component of smaller size will be redirected to the root of component of larger size
+  public void union (int p, int q){
+    int i=root(p);
+    int j=root(q);
+    if (i==j) return;
+    if(size[p]<size[q]){
+      parent[i]=j;
+      size[q] += size[p];
+    }
+    else{
+      parent[j]=i;
+      size[p]+=size[q];
+    }
+    count--;
+  }
+### return number of components 
+  public int count(){
+    return this.count;
+  }
+### method is to parse timestamp file, execute union operations until all are connected and return the earliest connecting time
+  public string getEarliestConnect(){
+    Scanner scan = new Scanner(System.in);
+    while (scan.hasNext()){
+        String str = scan.nextline();
+        String[] splited = str.split("\\s+");
+        String timestamp=splited[0];
+        int p=splited[1];
+        int q=splited[2];
+        union(p,q);
+        if this.count()==1 return timestamp;
+    }
+  }
+## define main function
+  public statis voild main(){
+    SocialNetworkConnectivity snc=new SocialNetworkConnectivity(10);
+    System.out.println ("all the friends were connected at " + snc.getEarliestConnect());
+  }
 
+}
